@@ -1,0 +1,37 @@
+2.2. La Métrica del "Fading" (Desvanecimiento) 
+El concepto de fading o desvanecimiento es la retirada intencional de la asistencia a medida 
+que aumenta la competencia.9 La ausencia de fading transforma el andamiaje en una muleta 
+permanente, lo cual es perjudicial para el aprendizaje a largo plazo.10 
+Para medir esto, la app debe calcular la Tasa de Retirada de Andamiaje (SFR - Scaffolding 
+Fading Rate). Esta métrica analiza la tendencia lineal del peso de dependencia ($w$) a través 
+de una serie temporal de problemas del mismo tipo (iso-mórficos). 
+Cálculo del Índice de Independencia ($I_{ind}$): 
+Para un conjunto de $N$ problemas en una unidad de aprendizaje: 
+ 
+ 
+$$I_{ind} = 1 - \frac{\sum_{i=1}^{N} w_i}{N}$$ 
+ 
+Donde $w_i$ es el peso de dependencia máximo utilizado en el problema $i$. 
+●​ Un $I_{ind}$ que se acerca a 1 indica maestría y autonomía. 
+●​ Un $I_{ind}$ estático indica estancamiento, incluso si el estudiante "acierta" las 
+respuestas con ayuda. 
+●​ Un $I_{ind}$ descendente indica regresión o aumento excesivo de la dificultad. 
+Visualización para el Padre: 
+Imagínese un gráfico de áreas apiladas. En la base, en color azul sólido, está el aporte del 
+estudiante. Encima, en color translúcido, está el aporte del sistema (andamiaje). Al inicio de la 
+unidad, el área translúcida domina. Con el tiempo, esta área se adelgaza y desaparece, 
+dejando solo el azul sólido. Esta visualización comunica instantáneamente el concepto de 
+Transferencia de Responsabilidad 9: "Su hijo está asumiendo la carga cognitiva que antes 
+llevaba la máquina". 
+2.3. Andamiaje Adaptativo vs. Fijo 
+La investigación indica que el andamiaje adaptativo (que se ajusta en tiempo real al 
+diagnóstico del estudiante) es superior al andamiaje fijo.1 La app debe actuar como un tutor 
+inteligente que diagnostica por qué se necesita ayuda. 
+La medición del progreso también implica evaluar la Eficacia del Andamiaje. Si el sistema 
+proporciona una ayuda de Nivel 3 y el estudiante falla inmediatamente después, esa ayuda 
+fue ineficaz. Si el estudiante acierta, la ayuda fue eficaz. 
+●​ Métrica de Receptividad: Porcentaje de intervenciones de andamiaje que resultan en 
+una acción correcta subsiguiente. Un aumento en esta métrica indica que el estudiante 
+está aprendiendo a utilizar los recursos de aprendizaje, una habilidad de gestión crítica. 
+El padre debe saber: "Su hijo no solo está aprendiendo matemáticas; está aprendiendo a 
+aprender, volviéndose más eficiente en el uso de las explicaciones". 

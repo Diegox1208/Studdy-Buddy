@@ -1,0 +1,35 @@
+obligatorio. 
+●​ Visualización: Una nube de etiquetas o un mural digital que crece. 
+●​ Valor: Valida la curiosidad intelectual como un resultado educativo valioso en sí mismo, 
+más allá de la utilidad para el examen. 
+7.4. Panel de Control de Habilidades Sociales y Emocionales (SEL) 
+Si la app incluye componentes de interacción (foros, pares) o autoevaluación emocional, se 
+pueden visualizar competencias SEL (Social Emotional Learning).47 
+●​ Conciencia de sí mismo: Frecuencia y precisión del registro de emociones (Mood 
+meter). 
+●​ Toma de decisiones responsable: Tiempo dedicado a reflexionar en dilemas o 
+problemas complejos antes de actuar. 
+Las visualizaciones deben ser simples (ej. semáforos, termómetros emocionales) pero 
+respaldadas por la consistencia de los datos a largo plazo.49 
+8. Conclusiones y Recomendaciones de 
+Implementación 
+La solución al problema de la "intangibilidad del valor" no reside en inventar nuevas 
+calificaciones, sino en revelar la rica capa de datos que subyace al proceso de aprendizaje. Al 
+implementar métricas de andamiaje, fluidez, cronometría mental, lucha productiva y 
+evaluación dinámica, una aplicación puede ofrecer una visión del progreso del alumno que 
+es: 
+1.​ Más Justa: Valora el esfuerzo, la estrategia y el potencial, no solo el resultado final. 
+2.​ Más Accionable: Permite intervenciones precisas (ej. corregir impulsividad) en tiempo 
+real. 
+3.​ Más Tranquilizadora: Muestra a los padres que el aprendizaje es una actividad 
+constante y acumulativa. 
+Recomendación Final: La app debe posicionarse ante los padres no como un tutor que 
+"ayuda a aprobar", sino como un "entrenador cognitivo" que construye las capacidades 
+(técnicas y de gestión) necesarias para el éxito en la vida. El reporte visual debe ser la 
+evidencia de ese entrenamiento diario, convirtiendo lo invisible en el activo más valioso de la 
+educación del niño. 
+Tabla Resumen de Métricas Propuestas 
+Dimensión del 
+Métrica Clave 
+Fuente de Datos 
+Visualización para 

@@ -1,0 +1,49 @@
+revelar conceptos. 
+Ej: "Intenta dibujar 
+un diagrama", 
+"Divide el problema 
+en dos partes". 
+Apunta a la gestión 
+de la tarea.9 
+3 
+Soporte 
+Conceptual 
+Explicaciones 
+sobre el principio 
+subyacente. Ej: 
+Recordatorio de la 
+definición de un 
+verbo o la ley de 
+Ohm. Ayuda a 
+identificar temas 
+esenciales.9 
+0.6 
+4 
+Modelado 
+(Worked Example) 
+Mostrar un 
+problema idéntico 
+resuelto paso a 
+paso. El estudiante 
+debe transferir la 
+lógica al problema 
+actual. Alta carga 
+de soporte.13 
+0.8 
+5 
+Solución Directa 
+(Bottom-out) 
+El sistema revela la 
+respuesta final o el 
+paso crítico 
+inmediato. Máxima 
+dependencia, 
+utilizado para evitar 
+el estancamiento 
+total.14 
+1.0 
+La app debe registrar no solo si se usó ayuda, sino qué nivel se utilizó. Un estudiante que pasa 
+de usar ayudas de Nivel 5 (Solución Directa) a ayudas de Nivel 2 (Estratégicas) en el 
+transcurso de una semana ha progresado objetivamente, aunque siga sin resolver el 
+problema de manera totalmente autónoma. Este matiz es vital para mostrar al padre el 
+"movimiento" dentro de la competencia. 

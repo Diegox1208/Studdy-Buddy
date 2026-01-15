@@ -1,0 +1,51 @@
+soporte a lo largo del tiempo. 
+2.1. Taxonomía y Cuantificación del Soporte 
+No todas las ayudas son iguales. Para medir el progreso, la app debe distinguir entre 
+diferentes tipos de intervenciones y asignarles un peso métrico que refleje el grado de 
+dependencia del estudiante. La literatura distingue entre andamiaje conceptual, 
+metacognitivo, procedimental y estratégico.9 
+2.1.1. Niveles de Intervención Algorítmica 
+Propongo una jerarquía de seis niveles para cuantificar la asistencia del sistema. Cada 
+interacción del estudiante con estas ayudas genera un punto de datos que alimenta el "Índice 
+de Independencia". 
+ 
+Nivel 
+Tipo de 
+Andamiaje 
+Descripción 
+Técnica y 
+Pedagógica 
+Peso de 
+Dependencia (w) 
+0 
+Autonomía Pura 
+Resolución del 
+problema sin 
+solicitar ayudas, sin 
+errores de 
+procedimiento y 
+dentro de un 
+tiempo de fluidez 
+aceptable. 
+0.0 
+1 
+Soporte 
+Metacognitivo 
+Prompts reflexivos 
+que no dan 
+contenido, sino que 
+activan la 
+autoverificación. Ej: 
+"¿Estás seguro de 
+tu cálculo?", 
+"Revisa el paso 
+anterior". Fomenta 
+la autorregulación.9 
+0.2 
+2 
+Soporte 
+Estratégico 
+Sugerencias sobre 
+cómo abordar el 
+problema sin 
+0.4 

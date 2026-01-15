@@ -1,0 +1,33 @@
+●​ Evitación: Ignora el tema y solo hace ejercicios fáciles o deja de usar la app. 
+Esta métrica conductual es una de las más importantes para el "músculo de gestión". Un 
+estudiante que regresa a la dificultad está demostrando carácter. La app debe celebrar esto 
+explícitamente: "¡Alerta de Resiliencia! Sofía tuvo problemas ayer con Geometría, pero hoy 
+volvió voluntariamente y mejoró su puntaje. Esa persistencia vale más que un 10 en un examen 
+fácil.".38 
+6. Evaluación Dinámica y Potencial de Aprendizaje 
+Para combatir la visión estática de las notas, la app debe incorporar principios de Evaluación 
+Dinámica (Dynamic Assessment - DA). La DA no pregunta "¿Qué sabes?", sino "¿Qué puedes 
+aprender ahora mismo con un poco de ayuda?".39 
+6.1. El Modelo Test-Teach-Retest 
+La app puede implementar micro-ciclos de evaluación integrados en la práctica diaria: 
+1.​ Pre-test: Se presenta un ítem desafiante. El alumno falla. 
+2.​ Mediación (Teach): La app ofrece una intervención graduada (andamiaje) o una 
+micro-explicación específica. 
+3.​ Post-test (Transferencia): Se presenta un ítem similar (isomórfico) inmediatamente 
+después. 
+6.2. Learning Potential Score (LPS) 
+A partir de estos ciclos, se calcula el Puntaje de Potencial de Aprendizaje (LPS). Este 
+puntaje cuantifica la "modificabilidad" del estudiante.39 
+ 
+$$LPS = \frac{S_{post} - S_{pre}}{S_{max} - S_{pre}}$$ 
+Donde $S_{pre}$ es el puntaje inicial (bajo) y $S_{post}$ es el puntaje tras la ayuda. 
+●​ Un LPS alto significa que el estudiante tiene una alta capacidad de absorción: aprende 
+rápido cuando se le explica. 
+●​ Un LPS bajo indica dificultades de aprendizaje más profundas que requieren 
+intervenciones más intensivas. 
+Valor para el Padre: 
+Para un padre cuyo hijo tiene malas notas ("suspenso"), el LPS es una métrica de esperanza y 
+realidad. "Su hijo falló el problema inicial, pero su LPS es del 90%. Esto significa que su 
+capacidad de aprendizaje está intacta; capta los conceptos casi instantáneamente con la guía 
+adecuada. El problema no es de capacidad, sino de base o práctica." Esto redefine la 
+narrativa del "alumno con problemas" al "alumno con potencial".41 

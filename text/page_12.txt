@@ -1,0 +1,31 @@
+7. La Interfaz Parental: Visualización de Intangibles 
+Todos los datos recopilados son inútiles si no se comunican efectivamente. La visualización 
+debe estar diseñada para traducir métricas psicométricas complejas en insights emocionales 
+y accionables para los padres. La meta es crear un "Character Report Card" digital.6 
+7.1. El "Character Report Card" y Narrativas NLG 
+En lugar de una lista de números, la app debe usar Generación de Lenguaje Natural (NLG) 
+para construir historias semanales basadas en los datos de Grit, Autonomía y Focus. 
+Ejemplo de Narrativa: 
+"Esta semana, el 'músculo académico' de Lucas se fortaleció en la gestión del error. Aunque 
+las ecuaciones cuadráticas fueron difíciles (Zona de Lucha Productiva), Lucas mostró alta 
+resiliencia al volver a intentarlo tres veces. Su impulsividad ha bajado: ahora toma 15 
+segundos para leer antes de responder, lo que ha mejorado su precisión en un 20%." 
+Este tipo de reporte cualitativo, pero fundamentado en datos duros (tiempos, intentos, clics), 
+satisface la necesidad del padre de "ver" el crecimiento personal de su hijo.6 
+7.2. Visualización de la Agencia y Autonomía 
+La autonomía se define como la capacidad de actuar según los propios valores e intereses, 
+regulando el propio comportamiento.43 Para visualizar esto, la app puede rastrear el origen de 
+las actividades. 
+Gráfico de Agencia (Agency Pie Chart): 
+●​ Sector "Asignado": Tareas que el sistema o el profesor obligaron a hacer. 
+●​ Sector "Elegido": Tareas que el alumno inició por su cuenta (repasar un tema anterior, 
+explorar un tema adelantado, hacer un quiz opcional). 
+El objetivo visual es que el sector "Elegido" crezca con el tiempo. Esto demuestra al padre que 
+el niño está pasando de ser un pasajero pasivo a un conductor activo de su aprendizaje. "Mire 
+cómo crece la iniciativa de su hijo. Nadie le dijo que hiciera esos 5 ejercicios extra; él decidió 
+hacerlo para mejorar.".45 
+7.3. La Visualización del "Wonder Wall" Digital 
+Para fomentar y visibilizar la curiosidad (un componente clave del músculo académico), la app 
+puede incluir un espacio donde el alumno registre preguntas o temas que le interesan pero 
+que no están en el examen ("Wonder Wall").44 
+●​ Dato: Número de preguntas/temas agregados o explorados fuera del currículo 

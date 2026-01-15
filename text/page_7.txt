@@ -1,0 +1,37 @@
+línea de celeración es constante, independientemente de si lee 10 o 100 palabras por minuto. 
+Implementación en la App: 
+La app debe medir y trazar la curva de aprendizaje diaria. 
+●​ Fase de Adquisición: La frecuencia de aciertos es baja, la de errores es alta. 
+●​ Fase de Fluidez: La frecuencia de aciertos sube rápidamente (aceleración), los errores 
+caen a cero (desaceleración). 
+●​ Fase de Mantenimiento: La frecuencia es estable y alta. 
+Valor para el Padre: 
+Mostrar estas curvas demuestra que, aunque el niño ya "sabe" el tema (precisión), sigue 
+progresando en "agilidad" (fluidez). "Mire cómo la curva de su hijo se dispara hacia arriba. 
+Está construyendo velocidad neurológica. Esto es lo que diferencia a un aficionado de un 
+experto." 
+3.3. El Modelo RESA: Resultados de la Fluidez 
+La fluidez no es un fin en sí misma, sino un medio para lograr resultados críticos de 
+aprendizaje, resumidos en el acrónimo RESA (Retention, Endurance, Stability, Application).4 La 
+app debe diseñar pruebas "invisibles" para medir estas dimensiones: 
+1.​ Retención (Retention): La capacidad de realizar la habilidad después de un periodo sin 
+práctica. 
+○​ Métrica: Comparar la frecuencia de desempeño en el tema X hoy vs. hace 2 
+semanas. Si la caída es mínima, hay alta retención. Si cae drásticamente, el 
+aprendizaje fue superficial. 
+2.​ Resistencia (Endurance): La capacidad de mantener la atención y el rendimiento 
+durante periodos prolongados. 
+○​ Métrica: Comparar la precisión/velocidad en el minuto 1 de la sesión vs. el minuto 20. 
+Una caída indica fatiga cognitiva; una línea estable indica resistencia ("músculo" 
+real). 
+3.​ Estabilidad (Stability): La capacidad de rendir bajo distracciones. 
+○​ Métrica: Introducir elementos distractores en la interfaz o límites de tiempo más 
+estrictos y medir si el rendimiento se mantiene. 
+4.​ Aplicación (Application/Adduction): La capacidad de usar la habilidad en contextos 
+nuevos no enseñados. 
+○​ Métrica: Presentar un problema compuesto que requiera la habilidad base. Si el 
+alumno lo resuelve, ha transferido el conocimiento. 
+Al cuantificar RESA, la app ofrece una auditoría completa de la robustez del aprendizaje. "Su 
+hijo no solo memorizó para el examen de ayer; retiene el 95% de la información dos semanas 
+después y puede usarla durante sesiones de 30 minutos sin fatigarse." Este es un argumento 
+de venta poderoso sobre la calidad del aprendizaje gestionado por la app. 

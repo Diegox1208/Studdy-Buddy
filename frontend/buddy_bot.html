@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy Bot - AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+
+        .chat-header {
+            background: #336E8F;
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .bot-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .chat-header-info h2 {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .chat-header-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: #336E8F;
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .message-content {
+            max-width: 70%;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        .message.bot .message-bubble {
+            background: white;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .message.user .message-bubble {
+            background: #336E8F;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #95a5a6;
+            margin-top: 5px;
+        }
+
+        .message.user .message-time {
+            text-align: right;
+        }
+
+        .confidence-check {
+            margin-top: 12px;
+            padding: 12px;
+            background: #e3f2fd;
+            border-radius: 12px;
+            border-left: 3px solid #2196f3;
+        }
+
+        .confidence-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .confidence-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .confidence-btn {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #2196f3;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2196f3;
+            transition: all 0.2s;
+        }
+
+        .confidence-btn:hover {
+            background: #2196f3;
+            color: white;
+        }
+
+        .scaffolding-level {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 24px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: #336E8F;
+        }
+
+        .send-btn {
+            width: 48px;
+            height: 48px;
+            background: #336E8F;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        .intervention-banner {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #2d3436;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 12px 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #95a5a6;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <img src="Studdy_Buddy_Logo.jpg" alt="Study Buddy" class="header-logo">
+            <div class="bot-avatar">🤖</div>
+            <div class="chat-header-info">
+                <h2>Buddy Bot</h2>
+                <p>Tu compañero de aprendizaje IA • En línea</p>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="intervention-banner">
+                ⚙️ Modo de Andamiaje Activo: Te guiaré paso a paso sin dar respuestas directas
+            </div>
+
+            <!-- Bot Welcome -->
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        ¡Hola! Soy Buddy Bot 👋 Estoy aquí para ayudarte a aprender, no para darte respuestas. ¡Resolvamos este problema juntos! ¿En qué estás trabajando?
+                    </div>
+                    <div class="message-time">10:30 AM</div>
+                </div>
+            </div>
+
+            <!-- User Question -->
+            <div class="message user">
+                <div class="message-avatar">U</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        Estoy atascado en este problema de álgebra. ¿Cuál es la respuesta a 2x + 5 = 15?
+                    </div>
+                    <div class="message-time">10:31 AM</div>
+                </div>
+            </div>
+
+            <!-- Bot Scaffolded Response -->
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        No puedo darte la respuesta todavía, ¡pero trabajemos juntos! 🧩
+                        <br><br>
+                        Primero, revisemos tu estrategia. ¿Has intentado aislar la variable 'x' en un lado de la ecuación?
+                        <br><br>
+                        <strong>Pista:</strong> ¿Qué operación puedes hacer en ambos lados para deshacerte del +5?
+                        <span class="scaffolding-level">Nivel 2 de Apoyo</span>
+                    </div>
+                    <div class="message-time">10:31 AM</div>
+                </div>
+            </div>
+
+            <!-- User Response -->
+            <div class="message user">
+                <div class="message-avatar">U</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        ¿Debería restar 5 de ambos lados?
+                    </div>
+                    <div class="message-time">10:32 AM</div>
+                </div>
+            </div>
+
+            <!-- Bot Positive Reinforcement -->
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        ¡Exactamente! ¡Vas por buen camino!
+                        <br><br>
+                        Entonces si restamos 5 de ambos lados:
+                        <br>2x + 5 - 5 = 15 - 5
+                        <br>2x = 10
+                        <br><br>
+                        Ahora, ¿cuál es tu siguiente paso para resolver x?
+                        <span class="scaffolding-level">Nivel 3 de Apoyo</span>
+                    </div>
+                    <div class="confidence-check">
+                        <div class="confidence-title">Antes de responder, ¿qué tan seguro estás?</div>
+                        <div class="confidence-buttons">
+                            <button class="confidence-btn">😟 Bajo</button>
+                            <button class="confidence-btn">😐 Medio</button>
+                            <button class="confidence-btn">😊 Alto</button>
+                        </div>
+                    </div>
+                    <div class="message-time">10:32 AM</div>
+                </div>
+            </div>
+
+            <!-- User Confident Response -->
+            <div class="message user">
+                <div class="message-avatar">U</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        <strong>Confianza: Alta 😊</strong>
+                        <br><br>
+                        Necesito dividir ambos lados por 2, ¡entonces x = 5!
+                    </div>
+                    <div class="message-time">10:33 AM</div>
+                </div>
+            </div>
+
+            <!-- Bot Success Message -->
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        ¡Perfecto! 🌟 ¡Lo resolviste tú mismo!
+                        <br><br>
+                        <strong>x = 5</strong> ¡es correcto!
+                        <br><br>
+                        ¿Notaste cómo desglosaste el problema paso a paso? Esa es la clave para dominar el álgebra. ¡Estás desarrollando excelentes habilidades de resolución de problemas!
+                        <br><br>
+                        <strong>+15 XP</strong> ¡por resolver con mínima ayuda! 🎮
+                        <span class="scaffolding-level">¡Autonomía Aumentada!</span>
+                    </div>
+                    <div class="message-time">10:33 AM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input 
+                type="text" 
+                class="input-field" 
+                placeholder="Haz una pregunta o describe tu problema..."
+                id="messageInput"
+                onkeypress="if(event.key === 'Enter') sendMessage()"
+            >
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+
+            const chatMessages = document.getElementById('chatMessages');
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.innerHTML = `
+                <div class="message-avatar">U</div>
+                <div class="message-content">
+                    <div class="message-bubble">${message}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            chatMessages.appendChild(userMessage);
+            
+            // Clear input
+            input.value = '';
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Show typing indicator
+            setTimeout(() => {
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message bot';
+                typingIndicator.id = 'typing';
+                typingIndicator.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <div class="typing-indicator">
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                chatMessages.appendChild(typingIndicator);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    document.getElementById('typing').remove();
+                    
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot';
+                    botMessage.innerHTML = `
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                Great question! Let me help you think through this. Can you tell me what you've tried so far?
+                                <span class="scaffolding-level">Level 1 Support</span>
+                            </div>
+                            <div class="message-time">${getCurrentTime()}</div>
+                        </div>
+                    `;
+                    chatMessages.appendChild(botMessage);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 2000);
+            }, 500);
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Add confidence button functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('confidence-btn')) {
+                const buttons = e.target.parentElement.querySelectorAll('.confidence-btn');
+                buttons.forEach(btn => btn.style.background = 'white');
+                e.target.style.background = '#2196f3';
+                e.target.style.color = 'white';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+contando con los dedos, lo cual no es escalable. Por ello, nuestra solución debe integrar la 
+enseñanza de precisión (Precision Teaching) y medir la frecuencia de respuesta correcta, no 
+solo el porcentaje.3 
+La Gestión abarca las funciones ejecutivas: autorregulación, tolerancia a la frustración, 
+búsqueda estratégica de ayuda y persistencia. Estos son los predictores más fuertes del éxito 
+a largo plazo, a menudo agrupados bajo términos como "habilidades blandas" o "carácter".5 
+La tecnología educativa tiene la capacidad única de inferir estas habilidades a través de los 
+datos de traza (trace data): el tiempo que un alumno pausa antes de responder, la decisión de 
+revisar un error, o la elección de enfrentar un problema difícil en lugar de uno fácil.7 
+La solución tecnológica propuesta debe operar bajo la premisa de que el valor educativo 
+reside en la transformación del estudiante de novato dependiente a experto autónomo. Este 
+proceso, descrito por Wood, Bruner y Ross como "andamiaje" (scaffolding), implica una 
+transferencia gradual de responsabilidad.9 La métrica de éxito, por tanto, no es la nota, sino la 
+pendiente de la curva de independencia. 
+1.2. El Imperativo de la Objetividad: Datos sobre Opiniones 
+El desafío central al comunicar el progreso sin exámenes es la subjetividad. Un comentario del 
+profesor ("se está esforzando") puede ser percibido por el padre como un consuelo vacío. Por 
+el contrario, un dato ("su velocidad de procesamiento ha aumentado un 40% y su 
+dependencia de las pistas ha bajado un 60%") es irrefutable. La "intangibilidad del valor" se 
+resuelve mediante la objetivación rigurosa de procesos subjetivos. 
+Para lograr esto, la app no debe preguntar al alumno cómo se siente (aunque esto tiene valor 
+secundario), sino observar cómo se comporta. La diferencia entre lo que un estudiante dice y 
+lo que hace es a menudo significativa. Por ejemplo, un estudiante puede reportar alta 
+confianza pero mostrar comportamientos de evitación (wheel spinning) o adivinanza rápida 
+(gaming the system).11 La arquitectura de datos debe priorizar las métricas conductuales 
+implícitas —cronometría, patrones de navegación, interacción con ayudas— sobre los 
+reportes explícitos, proporcionando una radiografía honesta del "músculo académico". 
+2. Arquitectura de Datos del Andamiaje y la 
+Transferencia de Responsabilidad 
+El andamiaje es el concepto pedagógico más potente para demostrar el aprendizaje en 
+proceso. Definido como el soporte temporal y adaptativo que permite al estudiante lograr una 
+tarea más allá de su capacidad individual, el andamiaje es la evidencia tangible de que la 
+educación está ocurriendo.9 Para la app, el objetivo es medir la "Densidad de Andamiaje" 
+necesaria para completar una tarea y, crucialmente, la tasa de retirada (Fading) de ese 

@@ -1,0 +1,35 @@
+construcción de esquemas mentales más robustos.29 
+Métricas de Identificación: 
+●​ Tiempo en Tarea (Time on Task): El estudiante dedica tiempo significativo a problemas 
+difíciles sin abandonar. 
+●​ Variabilidad de Estrategias: El estudiante borra, reescribe, o cambia herramientas 
+dentro de la app. Esto indica que está probando hipótesis, no solo esperando 
+pasivamente. 
+●​ Uso de Andamiaje Diferido: El estudiante intenta resolver por su cuenta durante un 
+tiempo umbral antes de pedir ayuda. 
+Para el padre, esto se visualiza como "Entrenamiento de Alta Intensidad". El mensaje es: "Su 
+hijo está levantando peso pesado. Le costó, sudó (cognitivamente), pero lo logró. Este 
+esfuerzo es lo que genera nuevas conexiones neuronales.".31 
+5.2. Detección y Mitigación del "Wheel Spinning" 
+El Wheel Spinning es la persistencia improductiva: el estudiante se esfuerza pero no progresa 
+porque carece de los prerrequisitos o tiene un concepto erróneo fundamental. Si no se 
+detecta, lleva a la desmotivación y al desamparo aprendido.12 
+Criterios de Detección 12: 
+1.​ Umbral de Maestría: El estudiante no alcanza la maestría (ej. 3 aciertos seguidos) 
+después de 10 problemas o intentos. 
+2.​ Patrón de Ayuda Ineficaz: Solicita múltiples pistas de "solución directa" (Nivel 5) en 
+más de 5 problemas sin retener el procedimiento. 
+3.​ Latencia Estacionaria: Los tiempos de respuesta no mejoran a pesar de la práctica 
+repetida. 
+Acción del Sistema: 
+Cuando se detecta Wheel Spinning, la app debe intervenir automáticamente (Stop-out), 
+sugiriendo un descanso, cambiando a un tema fundacional o alertando al profesor. 
+Reporte al Padre: "Detectamos un bloqueo en Fracciones. Para evitar frustración inútil, el 
+sistema redirigió a Juan a un repaso de divisiones básicas. Esto no es un paso atrás, es tomar 
+impulso." Esta gestión proactiva del fracaso es un valor inmenso del servicio.35 
+5.3. Métricas de Grit y Resiliencia 
+El Grit (tenacidad) es la pasión y perseverancia por metas a largo plazo. En el contexto de una 
+app, se puede medir a través de la Resiliencia ante el Error.8 
+Métrica: Tasa de Retorno al Desafío 
+¿Qué hace el estudiante después de una sesión de "fracaso" (muchos errores)? 
+●​ Resiliencia Alta: Vuelve al mismo tema al día siguiente o en la siguiente sesión. 

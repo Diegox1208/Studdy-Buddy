@@ -1,0 +1,32 @@
+Item Certainty.24 Antes o después de responder, se pide al alumno que califique su seguridad 
+(Baja, Media, Alta). 
+Matriz de Calibración: 
+●​ Realismo (Deseable): Alta Confianza + Respuesta Correcta / Baja Confianza + Error. 
+●​ Sobreconfianza (Peligroso): Alta Confianza + Error. Indica errores conceptuales 
+profundos o falta de atención. 
+●​ Subestimación (Inseguridad): Baja Confianza + Respuesta Correcta. Indica falta de 
+autoestima académica o dominio no consolidado. 
+El progreso del "músculo de gestión" se demuestra cuando las curvas de confianza y 
+precisión se alinean (mejor calibración). Esto es vital para el padre: "Su hijo está desarrollando 
+un juicio preciso sobre sus propias capacidades. Ya no comete errores por descuido creyendo 
+que lo sabe todo; es consciente de sus límites y trabaja en ellos.".26 
+4.3. Detección de "Gaming the System" 
+Para garantizar la integridad de los datos, la app debe filtrar comportamientos de gaming 
+(jugar con el sistema), donde el estudiante intenta completar la tarea sin aprender.11 
+Indicadores de Gaming: 
+●​ Click-through rápido: Pasar pantallas en <1 segundo. 
+●​ Help Abuse: Pedir pistas en cascada hasta llegar a la solución sin tiempo de lectura 
+intermedio. 
+●​ Systematic Guessing: Introducir respuestas rápidamente (ej. 1, 2, 3...) hasta acertar. 
+La app debe reportar al padre: "Hemos detectado y filtrado un 5% de actividad no productiva 
+esta semana. Los datos de progreso que ve son limpios y reales." Esto aumenta la confianza 
+en la herramienta y educa al padre sobre los hábitos de estudio de su hijo.12 
+5. Gestión del Esfuerzo: Lucha Productiva vs. Giro de 
+Ruedas 
+Uno de los aspectos más difíciles de comunicar a los padres es el valor del error y la 
+dificultad. Culturalmente, el error se ve como fracaso. La app debe cambiar esta narrativa 
+distinguiendo objetivamente entre la Lucha Productiva (Productive Struggle) y el esfuerzo 
+inútil o Giro de Ruedas (Wheel Spinning).12 
+5.1. Definición Algorítmica de la Lucha Productiva 
+La lucha productiva ocurre cuando el estudiante se enfrenta a una tarea que está en el límite 
+de su capacidad (Zona de Desarrollo Próximo) y persiste esforzadamente, lo que lleva a la 

@@ -1,0 +1,84 @@
+"Músculo" 
+(Input) 
+el Padre 
+Técnica / Maestría 
+Tasa de Fluidez 
+(Celeración) 
+Respuestas 
+correctas por 
+minuto 
+(Frecuencia) 
+Standard 
+Celeration Chart 
+(Curva de 
+aprendizaje 
+acelerada) 
+Independencia 
+Tasa de Retirada de 
+Andamiaje (Fading 
+Rate) 
+Nivel de ayuda 
+solicitado (0-5) vs. 
+Tiempo 
+Gráfico de Áreas 
+Apiladas 
+(Disminución de 
+ayuda) 
+Metacognición 
+Ratio de 
+Reflexividad e 
+Índice de 
+Impulsividad 
+Latencia de 
+Inspección vs. 
+Latencia de 
+Resolución 
+Medidor de 
+"Calidad de 
+Atención" 
+(Impulsivo vs. 
+Reflexivo) 
+Resiliencia (Grit) 
+Tasa de Retorno al 
+Desafío 
+Reintentos tras 
+error y retorno a 
+temas difíciles 
+Gráfico de Radar 
+(Character Report 
+Card) 
+Gestión del 
+Esfuerzo 
+Lucha Productiva 
+vs. Wheel Spinning 
+Tiempo en tarea, 
+variabilidad de 
+intentos, patrón de 
+errores 
+Medidor de "Zona 
+de Entrenamiento" 
+(Confort, 
+Crecimiento, 
+Frustración) 
+Potencial 
+Learning Potential 
+Score (LPS) 
+Ganancia de 
+rendimiento tras 
+mediación 
+(Test-Teach-Retest
+) 
+Barra de Potencial 
+de Aprendizaje 
+(Capacidad de 
+absorción) 
+Agencia 
+Índice de 
+Autonomía 
+% de tareas 
+iniciadas por el 
+usuario vs. 
+asignadas 
+Gráfico de Pastel 
+(Tiempo Elegido vs. 
+Obligatorio) 
