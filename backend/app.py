@@ -11,8 +11,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # Configure CORS - allow requests from frontend
-allowed_origins = os.getenv('CORS_ORIGINS', 'http://localhost:3000,https://study-buddy.vercel.app').split(',')
-CORS(app, origins=allowed_origins)
+allowed_origins = os.getenv('CORS_ORIGINS', 'http://localhost:3000,https://study-buddy-one-mu.vercel.app').split(',')
+CORS(app, resources={r"/api/*": {"origins": allowed_origins}}, supports_credentials=True)
 
 # Create uploads directory
 UPLOAD_FOLDER = Path(__file__).parent / 'uploads'
