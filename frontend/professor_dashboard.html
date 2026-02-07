@@ -264,6 +264,76 @@
             margin-bottom: 20px;
         }
 
+        .student-profile-header {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .student-name-age {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .student-name-age h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .student-age {
+            font-size: 18px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .student-description {
+            font-size: 15px;
+            color: #5a6c7d;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .profile-metrics-section {
+            margin: 25px 0;
+        }
+
+        .profile-metrics-section h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .profile-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .profile-metric-box {
+            background: white;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #336E8F;
+            margin-bottom: 8px;
+        }
+
+        .profile-metric-label {
+            font-size: 13px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
         .close-btn {
             font-size: 28px;
             cursor: pointer;
@@ -921,6 +991,40 @@
             <div class="modal-header">
                 <h2 id="modalStudentName">Student Profile</h2>
                 <span class="close-btn" onclick="closeStudentProfile()">&times;</span>
+            </div>
+
+            <!-- Student Profile Header: Name, Age, Description -->
+            <div class="student-profile-header">
+                <div class="student-name-age">
+                    <h2 id="profileName">Juan Martinez</h2>
+                    <span class="student-age" id="profileAge">15 años</span>
+                </div>
+                <div class="student-description" id="profileDescription">
+                    Estudiante dedicado con gran interés en matemáticas avanzadas. Muestra progreso constante y alta motivación por aprender. Trabaja bien de forma independiente pero ocasionalmente necesita guía adicional en temas complejos.
+                </div>
+            </div>
+
+            <!-- Metrics Section -->
+            <div class="profile-metrics-section">
+                <h3>Métricas de Rendimiento</h3>
+                <div class="profile-metrics-grid">
+                    <div class="profile-metric-box">
+                        <div class="profile-metric-value">45%</div>
+                        <div class="profile-metric-label">Autonomía</div>
+                    </div>
+                    <div class="profile-metric-box">
+                        <div class="profile-metric-value">62%</div>
+                        <div class="profile-metric-label">Fluidez</div>
+                    </div>
+                    <div class="profile-metric-box">
+                        <div class="profile-metric-value">3</div>
+                        <div class="profile-metric-label">Racha (días)</div>
+                    </div>
+                    <div class="profile-metric-box">
+                        <div class="profile-metric-value">78%</div>
+                        <div class="profile-metric-label">Resiliencia</div>
+                    </div>
+                </div>
             </div>
 
             <!-- NLG Summary -->
