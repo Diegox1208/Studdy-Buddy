@@ -20,7 +20,6 @@ Información básica de los estudiantes.
 - `nivel_educativo`: IB Diploma, IGCSE, Primer grado, etc.
 - `foto_perfil`: URL de la foto
 - `fecha_registro`, `activo`
-
 ---
 
 ### 2. **Profesores** (`profesores`)
