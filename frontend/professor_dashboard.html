@@ -1180,9 +1180,81 @@
             const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             document.getElementById('currentMonth').textContent = `${months[currentMonth]} ${currentYear}`;
-            // In a real implementation, this would regenerate the calendar grid
-            // For now, we'll keep it simple
+            // Reload bookings for the new month
+            loadBookingsFromDatabase();
         }
+
+        // Load bookings from database
+        async function loadBookingsFromDatabase() {
+            try {
+                const PROFESOR_ID = 1; // TODO: Get from logged-in user session
+                const response = await fetch(`http://localhost:5000/api/bookings?profesor_id=${PROFESOR_ID}`);
+                
+                if (!response.ok) {
+                    console.error('Failed to fetch bookings');
+                    return;
+                }
+
+                const bookings = await response.json();
+                console.log('📅 Loaded bookings:', bookings);
+
+                // Display bookings on calendar
+                displayBookingsOnCalendar(bookings);
+
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                // If backend is not running, calendar will show static demo data
+            }
+        }
+
+        function displayBookingsOnCalendar(bookings) {
+            // Clear existing dynamic events (keep static demo ones for now)
+            // In production, you'd clear all and only show database data
+            
+            bookings.forEach(booking => {
+                // Parse date to get day number
+                const bookingDate = new Date(booking.fecha);
+                const dayNumber = bookingDate.getDate();
+                
+                // Find the calendar day element
+                const calendarDays = document.querySelectorAll('.calendar-day');
+                calendarDays.forEach(dayElement => {
+                    const dayNumberElement = dayElement.querySelector('.calendar-day-number');
+                    if (dayNumberElement && parseInt(dayNumberElement.textContent) === dayNumber) {
+                        // Check if not other-month
+                        if (!dayElement.classList.contains('other-month')) {
+                            // Create event element
+                            const eventDiv = document.createElement('div');
+                            eventDiv.className = 'calendar-event class';
+                            eventDiv.textContent = `${booking.estudiante} - ${booking.materia}`;
+                            eventDiv.style.backgroundColor = 'rgba(74, 222, 128, 0.3)'; // Green for new bookings
+                            eventDiv.style.borderLeft = '3px solid #4ade80';
+                            
+                            // Add click handler
+                            eventDiv.onclick = () => {
+                                openClassDetails(
+                                    booking.materia,
+                                    '2', // hours - calculate from hora_inicio/hora_fin
+                                    booking.modalidad,
+                                    booking.materia,
+                                    'IB Diploma', // TODO: Get from student data
+                                    [booking.estudiante],
+                                    booking.direccion || `Virtual - ${booking.hora_inicio}`
+                                );
+                            };
+                            
+                            dayElement.appendChild(eventDiv);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Load bookings when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Professor Dashboard loaded');
+            loadBookingsFromDatabase();
+        });
 
         // Close modal on outside click
         window.onclick = function(event) {
