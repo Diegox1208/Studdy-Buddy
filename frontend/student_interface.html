@@ -336,60 +336,158 @@
             word-break: break-word;
         }
 
-        /* Wonder Wall */
-        .wonder-wall {
+        /* Tomar Clase Section */
+        .book-class-section {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
             border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .wonder-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .wonder-card {
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.3) 0%, rgba(79, 70, 229, 0.3) 100%);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .wonder-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(147, 51, 234, 0.4);
-        }
-
-        .wonder-question {
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
-
-        .wonder-date {
-            font-size: 11px;
-            opacity: 0.7;
-        }
-
-        .add-wonder-btn {
-            background: rgba(255,255,255,0.2);
-            border: 2px dashed rgba(255,255,255,0.5);
-            border-radius: 12px;
             padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
             text-align: center;
+        }
+
+        .book-class-btn {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            padding: 30px 60px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(74, 222, 128, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .book-class-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(74, 222, 128, 0.6);
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .book-class-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* Booking Modal */
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .booking-modal.active {
+            display: flex;
+        }
+
+        .booking-modal-content {
+            background: linear-gradient(135deg, rgba(51, 110, 143, 0.95) 0%, rgba(30, 64, 82, 0.95) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .booking-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .add-wonder-btn:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.8);
+        .booking-modal-close:hover {
+            background: rgba(239, 68, 68, 1);
+            transform: rotate(90deg);
+        }
+
+        .booking-modal h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .booking-form-group {
+            margin-bottom: 20px;
+        }
+
+        .booking-form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .booking-form-group select,
+        .booking-form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .booking-form-group select:focus,
+        .booking-form-group input:focus {
+            outline: none;
+            border-color: #4ade80;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .booking-form-group select option {
+            background: #1e4052;
+            color: white;
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .booking-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .booking-submit-btn:hover {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
         }
 
         /* Buddy Bot */
@@ -555,27 +653,55 @@
             </div>
         </div>
 
-        <!-- Wonder Wall -->
-        <div class="wonder-wall">
-            <h2 class="section-title"> Muro de Asombro - Tu Tablero de Curiosidades</h2>
-            <div class="wonder-grid">
-                <div class="wonder-card">
-                    <div class="wonder-question">"¿Por qué los agujeros negros tienen densidad infinita?"</div>
-                    <div class="wonder-date">Fijado hace 3 días</div>
+        <!-- Tomar Clase Section -->
+        <div class="book-class-section">
+            <h2 class="section-title">Reserva Tu Próxima Clase</h2>
+            <button class="book-class-btn" onclick="openBookingModal()">Tomar Clase</button>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="booking-modal">
+        <div class="booking-modal-content">
+            <button class="booking-modal-close" onclick="closeBookingModal()">✕</button>
+            <h2>📚 Elige Tu Clase</h2>
+            
+            <form id="bookingForm" onsubmit="submitBooking(event)">
+                <div class="booking-form-group">
+                    <label for="materia">Elige Materia</label>
+                    <select id="materia" required>
+                        <option value="">Selecciona una materia...</option>
+                        <option value="matematicas">Matemáticas</option>
+                        <option value="fisica">Física</option>
+                        <option value="quimica">Química</option>
+                        <option value="biologia">Biología</option>
+                        <option value="historia">Historia</option>
+                        <option value="lengua">Lengua y Literatura</option>
+                        <option value="ingles">Inglés</option>
+                        <option value="frances">Francés</option>
+                        <option value="programacion">Programación</option>
+                    </select>
                 </div>
-                <div class="wonder-card">
-                    <div class="wonder-question">"¿Cómo funciona el entrelazamiento cuántico?"</div>
-                    <div class="wonder-date">Fijado hace 1 semana</div>
+
+                <div class="booking-form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha" required>
                 </div>
-                <div class="wonder-card">
-                    <div class="wonder-question">"¿Cuál es la conexión entre las matemáticas y la música?"</div>
-                    <div class="wonder-date">Fijado hace 2 semanas</div>
+
+                <div class="time-inputs">
+                    <div class="booking-form-group">
+                        <label for="horaInicio">Hora Inicio</label>
+                        <input type="time" id="horaInicio" required>
+                    </div>
+
+                    <div class="booking-form-group">
+                        <label for="horaFin">Hora Fin</label>
+                        <input type="time" id="horaFin" required>
+                    </div>
                 </div>
-                <div class="add-wonder-btn" onclick="alert('La funcionalidad para agregar será implementada')">
-                    <div style="font-size: 36px; margin-bottom: 10px;">➕</div>
-                    <div>Agregar Nueva Pregunta</div>
-                </div>
-            </div>
+
+                <button type="submit" class="booking-submit-btn">Buscar Profesores Disponibles</button>
+            </form>
         </div>
     </div>
 
@@ -585,6 +711,48 @@
     </div>
 
     <script>
+        // Booking Modal Functions
+        function openBookingModal() {
+            document.getElementById('bookingModal').classList.add('active');
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').setAttribute('min', today);
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.getElementById('bookingForm').reset();
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const materia = document.getElementById('materia').value;
+            const fecha = document.getElementById('fecha').value;
+            const horaInicio = document.getElementById('horaInicio').value;
+            const horaFin = document.getElementById('horaFin').value;
+
+            // Validate time
+            if (horaInicio >= horaFin) {
+                alert('⚠️ La hora de inicio debe ser anterior a la hora de fin');
+                return;
+            }
+
+            // Here you would make an API call to search for available teachers
+            console.log('Booking request:', { materia, fecha, horaInicio, horaFin });
+            
+            alert(`✅ Buscando profesores disponibles para ${materia}\n📅 ${fecha}\n🕐 ${horaInicio} - ${horaFin}`);
+            
+            closeBookingModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('bookingModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+
         // Drag and Drop Implementation for Locker
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
