@@ -401,26 +401,6 @@
             position: relative;
         }
 
-        .booking-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(239, 68, 68, 0.8);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .booking-modal-close:hover {
-            background: rgba(239, 68, 68, 1);
-            transform: rotate(90deg);
-        }
-
         .booking-modal h2 {
             font-size: 28px;
             margin-bottom: 30px;
@@ -662,7 +642,6 @@
     <!-- Booking Modal -->
     <div id="bookingModal" class="booking-modal">
         <div class="booking-modal-content">
-            <button class="booking-modal-close" onclick="closeBookingModal()">✕</button>
             <h2>Elige Tu Clase</h2>
             
             <form id="bookingForm" onsubmit="submitBooking(event)">
