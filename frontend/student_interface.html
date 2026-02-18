@@ -702,7 +702,7 @@
             document.getElementById('bookingForm').reset();
         }
 
-        function submitBooking(event) {
+        async function submitBooking(event) {
             event.preventDefault();
             
             const materia = document.getElementById('materia').value;
@@ -716,12 +716,55 @@
                 return;
             }
 
-            // Here you would make an API call to search for available teachers
-            console.log('Booking request:', { materia, fecha, horaInicio, horaFin });
-            
-            alert(`✅ Buscando profesores disponibles para ${materia}\n📅 ${fecha}\n🕐 ${horaInicio} - ${horaFin}`);
-            
-            closeBookingModal();
+            // Prepare booking data
+            const bookingData = {
+                estudiante_id: 1, // TODO: Get from logged-in user session
+                materia: materia,
+                fecha: fecha,
+                hora_inicio: horaInicio,
+                hora_fin: horaFin,
+                modalidad: 'Virtual',
+                link_virtual: 'https://meet.google.com/generated-link' // TODO: Generate actual link
+            };
+
+            try {
+                // Show loading state
+                const submitBtn = event.target.querySelector('.booking-submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Procesando...';
+                submitBtn.disabled = true;
+
+                // Call backend API
+                const response = await fetch('http://localhost:5000/api/bookings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(`✅ ¡Clase programada exitosamente!\n\n📚 Materia: ${result.details.materia}\n📅 Fecha: ${result.details.fecha}\n🕐 Horario: ${result.details.hora_inicio} - ${result.details.hora_fin}\n\n¡Tu profesor recibirá la notificación!`);
+                    closeBookingModal();
+                } else {
+                    alert(`❌ Error: ${result.error}\n\nPor favor intenta nuevamente.`);
+                }
+
+                // Restore button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+
+            } catch (error) {
+                console.error('Error booking class:', error);
+                alert('❌ Error de conexión. Por favor verifica que el servidor esté corriendo.');
+                
+                // Restore button
+                const submitBtn = event.target.querySelector('.booking-submit-btn');
+                submitBtn.textContent = '¡Estoy Listo!';
+                submitBtn.disabled = false;
+            }
         }
 
         // Close modal when clicking outside

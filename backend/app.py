@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
+from database import StudyBuddyDB
 
 # Load environment variables
 load_dotenv()
@@ -16,6 +17,9 @@ CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 # Create uploads directory
 UPLOAD_FOLDER = Path(__file__).parent / 'uploads'
 UPLOAD_FOLDER.mkdir(exist_ok=True)
+
+# Initialize database
+db = StudyBuddyDB('studybuddy.db')
 
 # Store file metadata in memory (for testing)
 files_db = []
@@ -95,6 +99,142 @@ def health():
         'total_files': len(files_db)
     })
 
+@app.route('/api/bookings', methods=['POST'])
+def create_booking():
+    """Create a new class booking request"""
+    try:
+        data = request.json
+        
+        # Validate required fields
+        required_fields = ['estudiante_id', 'materia', 'fecha', 'hora_inicio', 'hora_fin']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'error': f'Missing field: {field}'}), 400
+        
+        # For now, assign to first available professor (you can add matching logic later)
+        # Get the first active professor
+        db.connect()
+        db.cursor.execute("SELECT id FROM profesores WHERE activo = 1 LIMIT 1")
+        profesor = db.cursor.fetchone()
+        
+        if not profesor:
+            return jsonify({'error': 'No professors available'}), 404
+        
+        profesor_id = profesor[0]
+        
+        # Get materia_id from materia name
+        materia_name_map = {
+            'matematicas': 'Matemáticas',
+            'fisica': 'Física',
+            'quimica': 'Química',
+            'biologia': 'Biología',
+            'historia': 'Historia',
+            'lengua': 'Lengua y Literatura',
+            'ingles': 'Inglés',
+            'frances': 'Francés',
+            'programacion': 'Programación'
+        }
+        
+        materia_name = materia_name_map.get(data['materia'].lower(), data['materia'])
+        
+        # Find or create materia
+        db.cursor.execute("SELECT id FROM materias WHERE nombre = ?", (materia_name,))
+        materia = db.cursor.fetchone()
+        
+        if not materia:
+            # Create new materia
+            db.cursor.execute(
+                "INSERT INTO materias (nombre) VALUES (?)",
+                (materia_name,)
+            )
+            db.conn.commit()
+            materia_id = db.cursor.lastrowid
+        else:
+            materia_id = materia[0]
+        
+        # Create the class
+        class_id = db.create_class(
+            materia_id=materia_id,
+            profesor_id=profesor_id,
+            estudiante_id=data['estudiante_id'],
+            fecha=data['fecha'],
+            hora_inicio=data['hora_inicio'],
+            hora_fin=data['hora_fin'],
+            modalidad=data.get('modalidad', 'Virtual'),
+            direccion=data.get('direccion'),
+            link_virtual=data.get('link_virtual'),
+            estado='programada'
+        )
+        
+        db.close()
+        
+        return jsonify({
+            'success': True,
+            'class_id': class_id,
+            'message': 'Clase programada exitosamente',
+            'details': {
+                'materia': materia_name,
+                'fecha': data['fecha'],
+                'hora_inicio': data['hora_inicio'],
+                'hora_fin': data['hora_fin'],
+                'profesor_id': profesor_id
+            }
+        }), 201
+        
+    except Exception as e:
+        print(f"❌ Error creating booking: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/bookings', methods=['GET'])
+def get_bookings():
+    """Get all class bookings"""
+    try:
+        db.connect()
+        
+        # Get student_id from query params (optional)
+        student_id = request.args.get('estudiante_id')
+        profesor_id = request.args.get('profesor_id')
+        
+        query = """
+            SELECT 
+                c.id,
+                c.fecha,
+                c.hora_inicio,
+                c.hora_fin,
+                c.estado,
+                c.modalidad,
+                m.nombre as materia,
+                e.nombre || ' ' || e.apellido as estudiante,
+                p.nombre || ' ' || p.apellido as profesor
+            FROM clases c
+            JOIN materias m ON c.materia_id = m.id
+            JOIN estudiantes e ON c.estudiante_id = e.id
+            JOIN profesores p ON c.profesor_id = p.id
+            WHERE 1=1
+        """
+        
+        params = []
+        if student_id:
+            query += " AND c.estudiante_id = ?"
+            params.append(student_id)
+        
+        if profesor_id:
+            query += " AND c.profesor_id = ?"
+            params.append(profesor_id)
+        
+        query += " ORDER BY c.fecha DESC, c.hora_inicio DESC"
+        
+        db.cursor.execute(query, params)
+        bookings = [dict(row) for row in db.cursor.fetchall()]
+        
+        db.close()
+        
+        return jsonify(bookings), 200
+        
+    except Exception as e:
+        print(f"❌ Error fetching bookings: {e}")
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('FLASK_ENV', 'development') == 'development'
@@ -103,6 +243,7 @@ if __name__ == '__main__':
     print(f"📁 Upload folder: {UPLOAD_FOLDER}")
     print(f"🌐 Server: http://localhost:{port}")
     print(f"📤 Upload endpoint: http://localhost:{port}/api/upload")
+    print(f"📅 Booking endpoint: http://localhost:{port}/api/bookings")
     print(f"🔧 Debug mode: {debug}")
     print("\nPress Ctrl+C to stop\n")
     
