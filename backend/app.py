@@ -1,15 +1,21 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 from database import StudyBuddyDB
+from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
+import functools
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
+
+# Secret key for JWT
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-change-in-production')
 
 # Configure CORS - allow all origins temporarily for debugging
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
@@ -18,8 +24,9 @@ CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 UPLOAD_FOLDER = Path(__file__).parent / 'uploads'
 UPLOAD_FOLDER.mkdir(exist_ok=True)
 
-# Initialize database
-db = StudyBuddyDB('studybuddy.db')
+# Initialize database (use absolute path)
+DB_PATH = Path(__file__).parent / 'studybuddy.db'
+db = StudyBuddyDB(str(DB_PATH))
 
 # Store file metadata in memory (for testing)
 files_db = []
@@ -98,6 +105,209 @@ def health():
         'upload_folder': str(UPLOAD_FOLDER),
         'total_files': len(files_db)
     })
+
+# ============================================
+# AUTHENTICATION ENDPOINTS
+# ============================================
+
+@app.route('/api/signup', methods=['POST'])
+def signup():
+    """Register a new user (student or professor)"""
+    try:
+        data = request.json
+        
+        # Validate required fields
+        required_fields = ['email', 'password', 'nombre', 'apellido', 'role']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'error': f'Missing field: {field}'}), 400
+        
+        email = data['email'].lower().strip()
+        password = data['password']
+        nombre = data['nombre']
+        apellido = data['apellido']
+        role = data['role']  # 'student' or 'professor'
+        
+        # Validate role
+        if role not in ['student', 'professor']:
+            return jsonify({'error': 'Invalid role. Must be "student" or "professor"'}), 400
+        
+        # Hash password
+        password_hash = generate_password_hash(password)
+        
+        db.connect()
+        
+        # Check if email already exists
+        if role == 'student':
+            db.cursor.execute("SELECT id FROM estudiantes WHERE email = ?", (email,))
+        else:
+            db.cursor.execute("SELECT id FROM profesores WHERE email = ?", (email,))
+        
+        if db.cursor.fetchone():
+            db.close()
+            return jsonify({'error': 'Email already registered'}), 409
+        
+        # Create user
+        if role == 'student':
+            edad = data.get('edad', 15)
+            nivel_educativo = data.get('nivel_educativo', 'Secundaria')
+            
+            db.cursor.execute("""
+                INSERT INTO estudiantes (nombre, apellido, email, password_hash, edad, nivel_educativo)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (nombre, apellido, email, password_hash, edad, nivel_educativo))
+        else:
+            especialidad = data.get('especialidad', 'General')
+            
+            db.cursor.execute("""
+                INSERT INTO profesores (nombre, apellido, email, password_hash, especialidad)
+                VALUES (?, ?, ?, ?, ?)
+            """, (nombre, apellido, email, password_hash, especialidad))
+        
+        db.conn.commit()
+        user_id = db.cursor.lastrowid
+        db.close()
+        
+        # Generate JWT token
+        token = jwt.encode({
+            'user_id': user_id,
+            'email': email,
+            'role': role,
+            'exp': datetime.utcnow() + timedelta(days=7)
+        }, app.config['SECRET_KEY'], algorithm='HS256')
+        
+        return jsonify({
+            'message': 'User created successfully',
+            'token': token,
+            'user': {
+                'id': user_id,
+                'email': email,
+                'nombre': nombre,
+                'apellido': apellido,
+                'role': role
+            }
+        }), 201
+        
+    except Exception as e:
+        print(f"❌ Signup error: {str(e)}")
+        return jsonify({'error': 'Signup failed', 'details': str(e)}), 500
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    """Authenticate user and return JWT token"""
+    try:
+        data = request.json
+        
+        # Validate required fields
+        if 'email' not in data or 'password' not in data:
+            return jsonify({'error': 'Email and password required'}), 400
+        
+        email = data['email'].lower().strip()
+        password = data['password']
+        
+        db.connect()
+        
+        # Try to find user in students table
+        db.cursor.execute("""
+            SELECT id, nombre, apellido, email, password_hash 
+            FROM estudiantes WHERE email = ? AND activo = 1
+        """, (email,))
+        user = db.cursor.fetchone()
+        role = 'student'
+        
+        # If not found, try professors table
+        if not user:
+            db.cursor.execute("""
+                SELECT id, nombre, apellido, email, password_hash 
+                FROM profesores WHERE email = ? AND activo = 1
+            """, (email,))
+            user = db.cursor.fetchone()
+            role = 'professor'
+        
+        db.close()
+        
+        if not user:
+            return jsonify({'error': 'Invalid email or password'}), 401
+        
+        # Verify password
+        user_dict = dict(user)
+        if not check_password_hash(user_dict['password_hash'], password):
+            return jsonify({'error': 'Invalid email or password'}), 401
+        
+        # Generate JWT token
+        token = jwt.encode({
+            'user_id': user_dict['id'],
+            'email': user_dict['email'],
+            'role': role,
+            'exp': datetime.utcnow() + timedelta(days=7)
+        }, app.config['SECRET_KEY'], algorithm='HS256')
+        
+        return jsonify({
+            'message': 'Login successful',
+            'token': token,
+            'user': {
+                'id': user_dict['id'],
+                'email': user_dict['email'],
+                'nombre': user_dict['nombre'],
+                'apellido': user_dict['apellido'],
+                'role': role
+            }
+        }), 200
+        
+    except Exception as e:
+        print(f"❌ Login error: {str(e)}")
+        return jsonify({'error': 'Login failed', 'details': str(e)}), 500
+
+@app.route('/api/user', methods=['GET'])
+def get_current_user():
+    """Get current user info from JWT token"""
+    try:
+        # Get token from Authorization header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        user_id = payload['user_id']
+        role = payload['role']
+        
+        db.connect()
+        
+        # Get user info
+        if role == 'student':
+            db.cursor.execute("""
+                SELECT id, nombre, apellido, email, edad, nivel_educativo, foto_perfil
+                FROM estudiantes WHERE id = ? AND activo = 1
+            """, (user_id,))
+        else:
+            db.cursor.execute("""
+                SELECT id, nombre, apellido, email, especialidad, foto_perfil
+                FROM profesores WHERE id = ? AND activo = 1
+            """, (user_id,))
+        
+        user = db.cursor.fetchone()
+        db.close()
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        user_dict = dict(user)
+        user_dict['role'] = role
+        
+        return jsonify({'user': user_dict}), 200
+        
+    except Exception as e:
+        print(f"❌ Get user error: {str(e)}")
+        return jsonify({'error': 'Failed to get user info', 'details': str(e)}), 500
 
 @app.route('/api/bookings', methods=['POST'])
 def create_booking():

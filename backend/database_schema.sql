@@ -9,11 +9,13 @@ CREATE TABLE IF NOT EXISTS estudiantes (
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL, -- Hashed password for security
     edad INTEGER NOT NULL,
     fecha_nacimiento DATE,
     nivel_educativo VARCHAR(50), -- IB Diploma, IGCSE, Primer grado, etc.
     foto_perfil VARCHAR(255),
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ultimo_acceso TIMESTAMP,
     activo BOOLEAN DEFAULT 1
 );
 
@@ -25,9 +27,11 @@ CREATE TABLE IF NOT EXISTS profesores (
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL, -- Hashed password for security
     especialidad VARCHAR(100), -- Matemáticas, Ciencias, etc.
     foto_perfil VARCHAR(255),
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ultimo_acceso TIMESTAMP,
     activo BOOLEAN DEFAULT 1
 );
 
