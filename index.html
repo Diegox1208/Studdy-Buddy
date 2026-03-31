@@ -82,24 +82,493 @@
                 font-size: 14px;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            color: #1a3a52;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px 10px;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: #336E8F;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a3a52;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #336E8F;
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .role-option {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .role-option:hover {
+            border-color: #336E8F;
+            background: #f0f7ff;
+        }
+
+        .role-option.selected {
+            border-color: #336E8F;
+            background: #336E8F;
+            color: white;
+        }
+
+        .role-option .role-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .role-option .role-name {
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #336E8F;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #2a5a75;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .toggle-auth {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .toggle-auth a {
+            color: #336E8F;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .toggle-auth a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
+    <script src="frontend/assets/config.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <button class="auth-button login-btn" onclick="handleLogin()">Log in</button>
-        <button class="auth-button signup-btn" onclick="handleSignup()">Sign up</button>
+        <button class="auth-button login-btn" onclick="showLogin()">Log in</button>
+        <button class="auth-button signup-btn" onclick="showSignup()">Sign up</button>
     </nav>
 
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">&times;</button>
+            <h2>Create Account</h2>
+            <p>Join Study Buddy and start your learning journey</p>
+            
+            <div class="error-message" id="signupError"></div>
+            
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="role-selector">
+                    <div class="role-option" onclick="selectRole('student')" data-role="student">
+                        <div class="role-emoji">🎓</div>
+                        <div class="role-name">Student</div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('professor')" data-role="professor">
+                        <div class="role-emoji">👨‍🏫</div>
+                        <div class="role-name">Professor</div>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="signupRole" name="role" required>
+                
+                <div class="form-group">
+                    <label for="signupNombre">First Name</label>
+                    <input type="text" id="signupNombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupApellido">Last Name</label>
+                    <input type="text" id="signupApellido" name="apellido" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required minlength="6">
+                </div>
+                
+                <div id="studentFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="signupEdad">Age</label>
+                        <input type="number" id="signupEdad" name="edad" min="5" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupNivel">Education Level</label>
+                        <select id="signupNivel" name="nivel_educativo">
+                            <option value="Primaria">Elementary School</option>
+                            <option value="Secundaria" selected>High School</option>
+                            <option value="IB Diploma">IB Diploma</option>
+                            <option value="IGCSE">IGCSE</option>
+                            <option value="Universidad">University</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="professorFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="signupEspecialidad">Specialty</label>
+                        <input type="text" id="signupEspecialidad" name="especialidad" placeholder="e.g., Mathematics, Physics">
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="signupBtn">
+                    <span id="signupBtnText">Create Account</span>
+                    <span class="loading" id="signupLoading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="toggle-auth">
+                Already have an account? <a href="#" onclick="showLogin(); return false;">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">&times;</button>
+            <h2>Welcome Back</h2>
+            <p>Log in to continue your learning</p>
+            
+            <div class="error-message" id="loginError"></div>
+            
+            <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span id="loginBtnText">Log In</span>
+                    <span class="loading" id="loginLoading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="toggle-auth">
+                Don't have an account? <a href="#" onclick="showSignup(); return false;">Sign up</a>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function handleLogin() {
-            // TODO: Implement login functionality
-            console.log('Login clicked');
+        // Modal functions
+        function showSignup() {
+            closeModals();
+            document.getElementById('signupModal').classList.add('active');
         }
 
-        function handleSignup() {
-            // TODO: Implement signup functionality
-            console.log('Sign up clicked');
+        function showLogin() {
+            closeModals();
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeModals() {
+            document.getElementById('signupModal').classList.remove('active');
+            document.getElementById('loginModal').classList.remove('active');
+            // Clear errors
+            document.getElementById('signupError').classList.remove('show');
+            document.getElementById('loginError').classList.remove('show');
+        }
+
+        // Role selection
+        let selectedRole = null;
+
+        function selectRole(role) {
+            selectedRole = role;
+            document.getElementById('signupRole').value = role;
+            
+            // Update UI
+            document.querySelectorAll('.role-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`[data-role="${role}"]`).classList.add('selected');
+            
+            // Show/hide fields based on role
+            if (role === 'student') {
+                document.getElementById('studentFields').style.display = 'block';
+                document.getElementById('professorFields').style.display = 'none';
+            } else {
+                document.getElementById('studentFields').style.display = 'none';
+                document.getElementById('professorFields').style.display = 'block';
+            }
+        }
+
+        // Signup handler
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            if (!selectedRole) {
+                showError('signupError', 'Please select a role (Student or Professor)');
+                return;
+            }
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            setLoading('signup', true);
+            
+            try {
+                const response = await fetch(`${API_URL}/api/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Save token and user info
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Redirect based on role
+                    if (result.user.role === 'student') {
+                        window.location.href = 'frontend/student_interface.html';
+                    } else {
+                        window.location.href = 'frontend/professor_dashboard.html';
+                    }
+                } else {
+                    showError('signupError', result.error || 'Signup failed');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('signupError', 'Network error. Please try again.');
+            } finally {
+                setLoading('signup', false);
+            }
+        }
+
+        // Login handler
+        async function handleLoginSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            setLoading('login', true);
+            
+            try {
+                const response = await fetch(`${API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Save token and user info
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Redirect based on role
+                    if (result.user.role === 'student') {
+                        window.location.href = 'frontend/student_interface.html';
+                    } else {
+                        window.location.href = 'frontend/professor_dashboard.html';
+                    }
+                } else {
+                    showError('loginError', result.error || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('loginError', 'Network error. Please try again.');
+            } finally {
+                setLoading('login', false);
+            }
+        }
+
+        // Helper functions
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function setLoading(type, isLoading) {
+            const btn = document.getElementById(`${type}Btn`);
+            const btnText = document.getElementById(`${type}BtnText`);
+            const loading = document.getElementById(`${type}Loading`);
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btnText.style.display = 'none';
+                loading.style.display = 'inline-block';
+            } else {
+                btn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModals();
+            }
+        }
+
+        // Check if user is already logged in
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (token && user) {
+                const userData = JSON.parse(user);
+                // Redirect to appropriate dashboard
+                if (userData.role === 'student') {
+                    window.location.href = 'frontend/student_interface.html';
+                } else {
+                    window.location.href = 'frontend/professor_dashboard.html';
+                }
+            }
         }
     </script>
 </body>
