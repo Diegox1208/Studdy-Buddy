@@ -268,7 +268,6 @@
             to { transform: rotate(360deg); }
         }
     </style>
-    <script src="frontend/assets/config.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -390,6 +389,13 @@
     </div>
 
     <script>
+        // API Configuration
+        const API_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:5000'
+            : 'https://studdybuddy-production-5a70.up.railway.app';
+
+        console.log('🔗 API URL:', API_URL);
+
         // Modal functions
         function showSignup() {
             closeModals();
