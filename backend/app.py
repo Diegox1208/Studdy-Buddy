@@ -33,11 +33,23 @@ SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
 SUPABASE_STORAGE_BUCKET = os.getenv('SUPABASE_STORAGE_BUCKET', 'studybuddy-files')
 supabase_client = None
-if SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY:
+
+
+def get_supabase_client():
+    global supabase_client
+    if supabase_client:
+        return supabase_client
+    if not SUPABASE_URL or not SUPABASE_SERVICE_ROLE_KEY:
+        return None
     if create_client is None:
         print("⚠️ Supabase credentials are configured, but supabase is not installed")
-    else:
+        return None
+    try:
         supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+        return supabase_client
+    except Exception as error:
+        print(f"⚠️ Could not initialize Supabase client: {error}")
+        return None
 
 
 def storage_path_to_url(path):
@@ -54,10 +66,11 @@ def extract_supabase_storage_path(path):
 
 
 def save_uploaded_file(file, filename):
-    if supabase_client:
+    storage_client = get_supabase_client()
+    if storage_client:
         storage_path = f"student-files/{filename}"
         file_bytes = file.read()
-        supabase_client.storage.from_(SUPABASE_STORAGE_BUCKET).upload(
+        storage_client.storage.from_(SUPABASE_STORAGE_BUCKET).upload(
             storage_path,
             file_bytes,
             file_options={
@@ -73,9 +86,10 @@ def save_uploaded_file(file, filename):
 
 
 def delete_stored_file(filepath):
-    if is_supabase_storage_path(filepath) and supabase_client:
+    storage_client = get_supabase_client()
+    if is_supabase_storage_path(filepath) and storage_client:
         storage_path = extract_supabase_storage_path(filepath)
-        supabase_client.storage.from_(SUPABASE_STORAGE_BUCKET).remove([storage_path])
+        storage_client.storage.from_(SUPABASE_STORAGE_BUCKET).remove([storage_path])
         return
 
     local_path = Path(filepath)
@@ -84,9 +98,10 @@ def delete_stored_file(filepath):
 
 
 def send_stored_file(filepath, download_name):
-    if is_supabase_storage_path(filepath) and supabase_client:
+    storage_client = get_supabase_client()
+    if is_supabase_storage_path(filepath) and storage_client:
         storage_path = extract_supabase_storage_path(filepath)
-        file_bytes = supabase_client.storage.from_(SUPABASE_STORAGE_BUCKET).download(storage_path)
+        file_bytes = storage_client.storage.from_(SUPABASE_STORAGE_BUCKET).download(storage_path)
         return send_file(BytesIO(file_bytes), as_attachment=True, download_name=download_name)
 
     local_path = Path(filepath)
