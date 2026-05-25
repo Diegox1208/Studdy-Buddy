@@ -7,6 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Study Buddy</title>
+    <script src="assets/config.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,90 +17,820 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a3a52 0%, #336E8F 50%, #4a8fb9 100%);
-            color: white;
+            background: #f7fbff;
+            color: #2c2f33;
             min-height: 100vh;
+            overflow: hidden;
         }
 
-        /* Navigation Bar */
-        .navbar {
-            position: fixed;
+        .landing-shell {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: minmax(420px, 1fr) minmax(420px, 1fr);
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .landing-auth-panel {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: #ffffff;
+            position: relative;
+            z-index: 2;
+            box-shadow: 18px 0 40px rgba(26, 58, 82, 0.08);
+        }
+
+        .landing-gallery-panel {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: #dceaf3;
+            isolation: isolate;
+        }
+
+        .landing-gallery-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.15) 38%, rgba(26, 58, 82, 0.2) 100%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(95, 159, 226, 0.12) 48%, rgba(26, 58, 82, 0.14) 100%);
+        }
+
+        .landing-gallery-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(0.4px);
+        }
+
+        .gallery-track {
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            padding: 20px 40px;
             display: flex;
-            justify-content: flex-end;
+            flex-direction: column;
+            width: 100%;
+            height: max-content;
+            animation: galleryScroll 14s linear infinite;
+            will-change: transform;
+        }
+
+        .gallery-sequence {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            width: 100%;
+            padding: 18px;
+            flex: 0 0 auto;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: min(44vh, 430px);
+            min-height: 310px;
+            object-fit: cover;
+            opacity: 0.64;
+            filter: grayscale(16%) sepia(8%) saturate(0.82) contrast(0.92) brightness(1.08);
+            mix-blend-mode: multiply;
+        }
+
+        @keyframes galleryScroll {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50%); }
+        }
+
+        .welcome-screen {
+            width: min(100%, 460px);
+            min-height: auto;
+            margin: 0 auto;
+            padding: 24px 22px 22px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 20px;
-            z-index: 1000;
+            justify-content: center;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .brand-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .buddy-mark {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+        }
+
+        .brand-logo {
+            width: min(100%, 220px);
+            height: auto;
+            display: block;
+        }
+
+        .welcome-copy {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .welcome-title {
+            max-width: 330px;
+            color: #2d3136;
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.24;
+        }
+
+        .welcome-subtitle {
+            max-width: 360px;
+            color: #50565d;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .auth-actions {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .auth-button {
-            padding: 12px 32px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
+            width: 100%;
+            min-height: 58px;
+            padding: 14px 24px;
+            border-radius: 0;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            border: none;
+            border: 3px solid #5f9fe2;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: none;
+            text-transform: uppercase;
         }
 
         .login-btn {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
+            background: white;
+            color: #2d3136;
         }
 
         .login-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #f7fbff;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 24px rgba(95, 159, 226, 0.18);
         }
 
         .signup-btn {
-            background: white;
-            color: #336E8F;
-            border: 2px solid white;
+            background: #5f9fe2;
+            color: white;
         }
 
         .signup-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
+            background: #4f91d5;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 24px rgba(95, 159, 226, 0.28);
+        }
+
+        .terms-copy {
+            max-width: 360px;
+            margin-top: 6px;
+            color: #5e646b;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .terms-copy a {
+            color: #5f9fe2;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .terms-copy a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive */
+        @media (max-width: 900px) {
+            .landing-shell {
+                grid-template-columns: 1fr;
+                grid-template-rows: minmax(210px, 30vh) auto;
+                overflow: hidden;
+            }
+
+            .landing-auth-panel {
+                height: 70vh;
+                padding: 20px 18px 22px;
+                box-shadow: 0 -18px 38px rgba(26, 58, 82, 0.08);
+            }
+
+            .landing-gallery-panel {
+                height: 30vh;
+                min-height: 210px;
+                order: -1;
+            }
+
+            .gallery-track {
+                top: 0;
+                left: 0;
+                right: auto;
+                bottom: 0;
+                flex-direction: row;
+                width: max-content;
+                height: 100%;
+                animation: galleryScrollMobile 15s linear infinite;
+            }
+
+            .gallery-sequence {
+                flex-direction: row;
+                width: max-content;
+                height: 100%;
+                padding: 14px;
+            }
+
+            .gallery-image {
+                width: min(74vw, 420px);
+                height: 100%;
+                min-height: 0;
+            }
+
+            @keyframes galleryScrollMobile {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+            }
+        }
+
         @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
+            .welcome-screen {
+                padding: 22px 18px 20px;
+                gap: 22px;
+            }
+
+            .brand-logo {
+                width: min(100%, 210px);
+            }
+
+            .welcome-title {
+                font-size: 25px;
             }
 
             .auth-button {
-                padding: 10px 24px;
-                font-size: 14px;
+                min-height: 56px;
+                font-size: 16px;
             }
+        }
+
+        @media (max-height: 720px) {
+            .welcome-screen {
+                gap: 18px;
+                padding-top: 18px;
+                padding-bottom: 16px;
+            }
+
+            .buddy-mark {
+                width: 46px;
+                height: 46px;
+            }
+
+            .brand-logo {
+                width: min(100%, 190px);
+            }
+
+            .welcome-title {
+                font-size: 23px;
+            }
+
+            .welcome-subtitle {
+                font-size: 15px;
+            }
+
+            .auth-button {
+                min-height: 52px;
+                padding: 12px 20px;
+            }
+
+            .terms-copy {
+                font-size: 12px;
+                margin-top: 8px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-track {
+                animation: none;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            color: #1a3a52;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px 10px;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: #336E8F;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a3a52;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #336E8F;
+        }
+
+        .role-toggle {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .role-toggle a {
+            color: #336E8F;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .role-toggle a:hover {
+            color: #2a5a75;
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #336E8F;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #2a5a75;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .toggle-auth {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .toggle-auth a {
+            color: #336E8F;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .toggle-auth a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <button class="auth-button login-btn" onclick="handleLogin()">Log in</button>
-        <button class="auth-button signup-btn" onclick="handleSignup()">Sign up</button>
-    </nav>
+    <main class="landing-shell">
+        <section class="landing-auth-panel">
+            <div class="welcome-screen">
+                <section class="brand-area" aria-label="Study Buddy welcome">
+                    <img class="brand-logo" src="Studdy_Buddy_Logo.jpg" alt="Study Buddy">
+                    <div class="welcome-copy">
+                        <h1 class="welcome-title">Estudia donde quieras!</h1>
+                        <p class="welcome-subtitle">Quedarte atascado no es un problema</p>
+                    </div>
+                </section>
+
+                <section class="auth-actions" aria-label="Account actions">
+                    <button class="auth-button signup-btn" onclick="showSignup()">Sign up</button>
+                    <button class="auth-button login-btn" onclick="showLogin()">Log in</button>
+                    <p class="terms-copy">
+                        By creating an account, you agree to our
+                        <a href="#">Terms &amp; Conditions</a> and agree to
+                        <a href="#">Privacy Policy</a>
+                    </p>
+                </section>
+            </div>
+        </section>
+
+        <section class="landing-gallery-panel" aria-label="Study Buddy class photos">
+            <div class="gallery-track" aria-hidden="true">
+                <div class="gallery-sequence">
+                    <img class="gallery-image" src="assets/studybuddy-1.jpeg" alt="">
+                    <img class="gallery-image" src="assets/studybuddy-2.jpeg" alt="">
+                    <img class="gallery-image" src="assets/studybuddy-3.jpeg" alt="">
+                    <img class="gallery-image" src="assets/studybuddy-4.jpeg" alt="">
+                </div>
+                <div class="gallery-sequence">
+                    <img class="gallery-image" src="assets/studybuddy-1.jpeg" alt="">
+                    <img class="gallery-image" src="assets/studybuddy-2.jpeg" alt="">
+                    <img class="gallery-image" src="assets/studybuddy-3.jpeg" alt="">
+                    <img class="gallery-image" src="assets/studybuddy-4.jpeg" alt="">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">&times;</button>
+            <h2>Create Account</h2>
+            <p>Join Study Buddy and start your learning journey</p>
+            
+            <div class="error-message" id="signupError"></div>
+            
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="role-toggle">
+                    <span id="roleText">Creating account as Student</span> • 
+                    <a id="roleToggleLink" onclick="toggleRole(); return false;">Profesor?</a>
+                </div>
+                
+                <input type="hidden" id="signupRole" name="role" value="student" required>
+                
+                <div class="form-group">
+                    <label for="signupNombre">First Name</label>
+                    <input type="text" id="signupNombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupApellido">Last Name</label>
+                    <input type="text" id="signupApellido" name="apellido" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required minlength="6">
+                </div>
+                
+                <div id="studentFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="signupEdad">Age</label>
+                        <input type="number" id="signupEdad" name="edad" min="5" max="100">
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="signupBtn">
+                    <span id="signupBtnText">Create Account</span>
+                    <span class="loading" id="signupLoading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="toggle-auth">
+                Already have an account? <a href="#" onclick="showLogin(); return false;">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">&times;</button>
+            <h2>Welcome Back</h2>
+            <p>Log in to continue your learning</p>
+            
+            <div class="error-message" id="loginError"></div>
+            
+            <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span id="loginBtnText">Log In</span>
+                    <span class="loading" id="loginLoading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="toggle-auth">
+                Don't have an account? <a href="#" onclick="showSignup(); return false;">Sign up</a>
+            </div>
+        </div>
+    </div>
 
     <script>
-        function handleLogin() {
-            // TODO: Implement login functionality
-            console.log('Login clicked');
+        // Modal functions
+        function showSignup() {
+            closeModals();
+            document.getElementById('signupModal').classList.add('active');
         }
 
-        function handleSignup() {
-            // TODO: Implement signup functionality
-            console.log('Sign up clicked');
+        function showLogin() {
+            closeModals();
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeModals() {
+            document.getElementById('signupModal').classList.remove('active');
+            document.getElementById('loginModal').classList.remove('active');
+            // Clear errors
+            document.getElementById('signupError').classList.remove('show');
+            document.getElementById('loginError').classList.remove('show');
+            // Reset to student when closing
+            document.getElementById('signupRole').value = 'student';
+            document.getElementById('roleText').textContent = 'Creating account as Student';
+            document.getElementById('roleToggleLink').textContent = 'Profesor?';
+            document.getElementById('studentFields').style.display = 'none';
+        }
+
+        // Role toggle
+        function toggleRole() {
+            const currentRole = document.getElementById('signupRole').value;
+            
+            if (currentRole === 'student') {
+                // Switch to professor
+                document.getElementById('signupRole').value = 'professor';
+                document.getElementById('roleText').textContent = 'Creating account as Professor';
+                document.getElementById('roleToggleLink').textContent = 'Student?';
+                document.getElementById('studentFields').style.display = 'none';
+            } else {
+                // Switch to student
+                document.getElementById('signupRole').value = 'student';
+                document.getElementById('roleText').textContent = 'Creating account as Student';
+                document.getElementById('roleToggleLink').textContent = 'Profesor?';
+                document.getElementById('studentFields').style.display = 'block';
+            }
+        }
+
+        // Signup handler
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            setLoading('signup', true);
+
+            if (!API_URL) {
+                showError('signupError', 'Backend API is not configured yet.');
+                setLoading('signup', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Save token and user info
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Redirect based on role
+                    if (result.user.role === 'student') {
+                        window.location.href = 'student_interface.html';
+                    } else {
+                        window.location.href = 'professor_dashboard.html';
+                    }
+                } else {
+                    showError('signupError', result.error || 'Signup failed');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('signupError', 'Network error. Please try again.');
+            } finally {
+                setLoading('signup', false);
+            }
+        }
+
+        // Login handler
+        async function handleLoginSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            setLoading('login', true);
+
+            if (!API_URL) {
+                showError('loginError', 'Backend API is not configured yet.');
+                setLoading('login', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Save token and user info
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Redirect based on role
+                    if (result.user.role === 'student') {
+                        window.location.href = 'student_interface.html';
+                    } else {
+                        window.location.href = 'professor_dashboard.html';
+                    }
+                } else {
+                    showError('loginError', result.error || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('loginError', 'Network error. Please try again.');
+            } finally {
+                setLoading('login', false);
+            }
+        }
+
+        // Helper functions
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function setLoading(type, isLoading) {
+            const btn = document.getElementById(`${type}Btn`);
+            const btnText = document.getElementById(`${type}BtnText`);
+            const loading = document.getElementById(`${type}Loading`);
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btnText.style.display = 'none';
+                loading.style.display = 'inline-block';
+            } else {
+                btn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModals();
+            }
+        }
+
+        // Check if user is already logged in
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (token && user) {
+                const userData = JSON.parse(user);
+                // Redirect to appropriate dashboard
+                if (userData.role === 'student') {
+                    window.location.href = 'student_interface.html';
+                } else {
+                    window.location.href = 'professor_dashboard.html';
+                }
+            }
         }
     </script>
 </body>
